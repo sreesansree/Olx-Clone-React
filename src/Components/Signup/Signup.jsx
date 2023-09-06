@@ -1,39 +1,42 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
 import { FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function Signup() {
-  const navigate=useNavigate()
+  const inputElement = useRef(null)
+  useEffect(() => {
+inputElement.current.focus()
+  })
+  const navigate = useNavigate()
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const {firebase} = useContext(FirebaseContext);
+  const { firebase } = useContext(FirebaseContext);
 
   const handleSubmit = (e) => {
     e.preventDefault()
-  firebase
-  .auth()
-  .createUserWithEmailAndPassword(email,password)
-  .then((result)=>{
-    result.user.updateProfile({displayName:username}).then(()=>{
-      firebase.firestore().collection('users').add({
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        result.user.updateProfile({ displayName: username }).then(() => {
+          firebase.firestore().collection('users').add({
 
-        id:result.user.uid,
-        username:username,
-        phone:phone
-      }).then(()=>{
-        navigate("/login");
+            id: result.user.uid,
+            username: username,
+            phone: phone
+          }).then(() => {
+            navigate("/login");
+          })
+        }).catch((error) => {
+          alert(error.message)
+        })
+      }).catch((error) => {
+        alert(error.message)
       })
-    }).catch((error)=>{
-      alert(error.message)
-  })
-  }).catch((error)=>{
-    alert(error.message)
-})
 
   }
 
@@ -52,7 +55,7 @@ export default function Signup() {
             onChange={(e) => setUsername(e.target.value)}
             id="fname"
             name="name"
-            defaultValue="John"
+            ref={inputElement}
           />
           <br />
           <label htmlFor="fname">Email</label>
@@ -95,7 +98,7 @@ export default function Signup() {
           <button>Signup</button>
         </form>
         {/* <button>Login</button> */}
-        <a >Login</a>
+        <a onClick={() => navigate("/login")}>Login</a>
       </div>
     </div>
   );

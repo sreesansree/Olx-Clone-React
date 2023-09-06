@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef,useEffect } from 'react';
 import { FirebaseContext } from '../../store/Context'
 import Logo from '../../olx-logo.png';
 import './Login.css';
@@ -12,11 +12,17 @@ function Login() {
   const [password, setPassword] = useState('')
   const { firebase } = useContext(FirebaseContext);
 
-  const handleSubmit=(e)=>{
+  const inputElement = useRef(null);
+
+  useEffect(()=>{
+    inputElement.current.focus();
+  },[])
+ 
+  const handleSubmit = (e) => {
     e.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(email,password).then(()=>{
+    firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
       navigate("/");
-    }).catch((error)=>{
+    }).catch((error) => {
       alert(error.message)
     })
   }
@@ -33,26 +39,27 @@ function Login() {
             value={email}
             id="fname"
             name="email"
-            onChange={(e)=>setEmail(e.target.value)}
+            ref={inputElement}
+            onChange={(e) => setEmail(e.target.value)}
             defaultValue="username"
           />
           <br />
           <label htmlFor="lname">Password</label>
           <br />
           <input
-            className="input" 
+            className="input"
             type="password"
             value={password}
             id="lname"
             name="password"
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             defaultValue="Doe"
           />
           <br />
           <br />
-          <button>Login</button>
+          <button >Login</button>
         </form>
-        <a>Signup</a>
+        <a onClick={() => navigate("/sighup")}>Signup</a>
       </div>
     </div>
   );

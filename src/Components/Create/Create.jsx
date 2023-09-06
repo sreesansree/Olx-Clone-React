@@ -13,10 +13,16 @@ const Create = () => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const date = new Date();
 
   const handleSubmit = () => {
+    if (!name || !category || !price || !image) {
+      alert("Please fill in all fields.");
+      return; // Prevent form submission if any field is empty
+    }
+
+   
     firebase
       .storage()
       .ref(`/image/${image.name}`)
@@ -32,9 +38,10 @@ const Create = () => {
             userId: user.uid,
             createdAt: date.toDateString(),
           });
-          navigate('/')
+          navigate('/');
         });
-      });
+      })
+     
   }
 
   return (
@@ -52,7 +59,8 @@ const Create = () => {
             id="fname"
             onChange={(e) => setName(e.target.value)}
             name="Name"
-            defaultValue="John"
+           
+            
           />
           <br />
           <label htmlFor="fname">Category</label>
@@ -64,7 +72,7 @@ const Create = () => {
             id="fname"
             onChange={(e) => setCategory(e.target.value)}
             name="category"
-            defaultValue="John"
+            
           />
           <br />
           <label htmlFor="fname">Price</label>
@@ -80,13 +88,14 @@ const Create = () => {
           <br />
 
           <br />
+          {image &&
           <img
             alt="Posts"
             width="200px"
             height="200px"
             src={image ? URL.createObjectURL(image) : ""}
           ></img>
-
+          }
           <br />
           <input
             onChange={(e) => {

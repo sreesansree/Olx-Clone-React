@@ -11,7 +11,7 @@ import Create from './Pages/Create';
 import View from './Pages/ViewPost'
 import { AuthContext, FirebaseContext } from './store/Context';
 import Post from './store/PostContext'
-
+import './App.css'
 
 function App() {
 

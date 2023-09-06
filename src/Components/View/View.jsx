@@ -19,10 +19,14 @@ function View() {
   // console.log(userDetails,'userDetails')
   return (
     <div className="viewParentDiv">
-      <div className="imageShowDiv">
+      <div className="imageShowDiv" style={{ padding: '50px' }}>
         <img
           src={postDetails.url}
           alt=""
+          style={{
+            width: '100%', 
+            height: 'auto', 
+          }}
         />
       </div>
       <div className="rightSection">
