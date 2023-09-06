@@ -4,11 +4,14 @@
 }
 .viewParentDiv .imageShowDiv {
   padding: 16px;
-  width: 70vw;
+  padding-right: 6px;
+  width: 65vw;
 }
 .viewParentDiv .imageShowDiv img {
-  width: 65vw;
-  height: 85vh;
+  padding-top: 5px;
+  padding-left: 400px;
+  width: 75vh;
+  height: 75vh;
 }
 
 .viewParentDiv .rightSection {
