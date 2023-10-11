@@ -38,7 +38,7 @@ function Header() {
           </div>
         </div>
         <div className="language">
-          <span> ENGLISH </span>
+          <span> ENGLISh </span>
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
